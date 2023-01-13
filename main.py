@@ -27,6 +27,7 @@ class TestArrays(unittest.TestCase):
         self.assertEqual(romanToInt("MCMXCIV"), 1994)
         self.assertEqual(romanToInt("LVIII"), 58)
         self.assertEqual(romanToInt("III"), 3)
+        self.assertEqual(romanToInt("MDCCCLXXXIV"), 1884)
 
 if __name__ == '__main__':
     unittest.main()

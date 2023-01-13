@@ -11,30 +11,27 @@ def romanToInt(s):
     specialChars = {"I": ("V", "X"),
                     "X": ("L", "C"),
                     "C": ("D", "M")}
+    prevVal = 1000
+    prevSym = "M"
+    expected = ()
     sum = 0
-    specialSymb = None
     for idx in range(len(s)):
         val = romanDict.get(s[idx], None)
         if val is None:
             raise ValueError()
-
-        if specialSymb is None:
-            specialSymb = specialChars.get(s[idx], None)
-            if specialSymb is None:
-                sum += val
-            else:
-                specialVal = val
+        sum += val
+        if val > prevVal:
+            if s[idx] not in expected:
+                raise ValueError()
+            sum -= 2*prevVal
+            prevVal = 1000
+            prevSym = "M"
+            expected = ()
         else:
-            if s[idx] in specialSymb:
-                sum += val
-                sum -= specialVal
-            else:
-                if val > specialVal:
-                    raise ValueError()
-                sum += val;
-                sum += specialVal
-            specialVal = None
-            specialSymb = None
-    if specialVal is not None:
-        sum += specialVal
+            sp = specialChars.get(s[idx], None)
+            if sp is not None:
+                prevVal = val
+                prevSym = s[idx]
+                expected = sp
+
     return sum
